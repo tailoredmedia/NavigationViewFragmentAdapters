@@ -10,35 +10,32 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. */
+ * limitations under the License.
+ *
+ * --------
+ *
+ * FILE MODIFIED 2018 Tailored Media GmbH */
 
 package com.patloew.navigationviewfragmentadaptersample;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.patloew.navigationviewfragmentadapters.NavigationViewStateFragmentAdapter;
 import com.patloew.navigationviewfragmentadapters.OnNavigationItemSelectedListener;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.patloew.navigationviewfragmentadaptersample.databinding.ActivityMainBottomnavigationBinding;
 
 public class StateMainBottomNavigationActivity extends AppCompatActivity implements MainActivityView {
 
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView bottomNavigationView;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
+    private ActivityMainBottomnavigationBinding binding;
     private MyNavigationViewAdapter myNavigationViewAdapter;
 
     @Override
@@ -50,15 +47,14 @@ public class StateMainBottomNavigationActivity extends AppCompatActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_bottomnavigation);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_bottomnavigation);
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.adapter_label);
 
         myNavigationViewAdapter = new MyNavigationViewAdapter(getSupportFragmentManager(), R.id.container, R.id.navitem_1, savedInstanceState);
-        myNavigationViewAdapter.attachTo(bottomNavigationView);
+        myNavigationViewAdapter.attachTo(binding.bottomNavigation);
         myNavigationViewAdapter.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         myNavigationViewAdapter.setNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
             @Override
